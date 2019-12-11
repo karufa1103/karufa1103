@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+        <link href="css/style.css" rel="stylesheet" type="text/css">
     <meta charset="utf-8" />
     <title>情報学部チャットアプリ</title>
   </head>
   <body><hr>
-    <h2>知的情報システム チャット</h2>
+    <h2 style="color:#fff;">知的情報システム チャット <img id="image_place" style="width:30px; height:30px;" src="image/icon1.jpg"/></h2>
+    
     <hr>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
@@ -31,10 +33,12 @@
   firebase.analytics();
 </script>
 
-    <div>
-      <input id="name" placeholder="名前" />
-      <input id="message" placeholder="メッセージ" />
-      <button id="send">投稿</button>
+    <div class="conte">
+      <input class ="na"type="text" id="name" placeholder="名前" required>
+      <input class = "me" type="text" id="message" placeholder="メッセージ" required>
+      <div class="a">
+      <input class ="pos" type="button" id="send" value="POST" name="send">
+    </div>
     </div>
     <ul id="messages">
     </ul>
@@ -42,19 +46,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
     <script>
+
       // データベースの参照を準備
       var firebaseRef = new Firebase("https://firstchatapp-5f0fa.firebaseio.com"); // ... 1
       var messagesRef = firebaseRef.child('messages'); // ... 2
- 
+
       // 既存メッセージを表示
       messagesRef.on('child_added', function(snapshot) { // ... 3
         var msg = snapshot.val();
-        $('<li>').text(msg.name + ': ' + msg.body).prependTo('#messages');
+        if(msg.name=="" && msg.body==""){
+        }else{
+            $('<li>').text(msg.name + ': ' + msg.body).prependTo('#messages');
+        }
+       
       });
- 
+      
       $('#send').click(function() {
         // 新規メッセージを投稿
-        messagesRef.push({ // ... 4
+        
+        messagesRef.push({
           name: $('#name').val(),
           body: $('#message').val()
         });
